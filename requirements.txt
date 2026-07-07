@@ -4,3 +4,4 @@ scikit-learn>=1.4
 Pillow>=10.0
 numpy>=1.26
 opencv-python>=4.10
+streamlit>=1.36

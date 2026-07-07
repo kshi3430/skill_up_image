@@ -21,7 +21,7 @@ def main():
     device = device_name()
     checkpoint = torch.load(args.model, map_location=device, weights_only=True)
     classes = checkpoint["classes"]
-    model = make_model(len(classes))
+    model = make_model(len(classes), pretrained=False)
     model.load_state_dict(checkpoint["state_dict"])
     model.to(device).eval()
 

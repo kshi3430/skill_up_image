@@ -26,4 +26,13 @@ python camera_predict.py
 
 손톱을 화면 중앙 사각형에 놓고 `Q`를 누르면 종료됩니다. 카메라가 열리지 않으면 macOS의 **설정 → 개인정보 보호 및 보안 → 카메라**에서 Terminal 또는 IDE의 권한을 허용하세요. 화면의 확률은 진단 확률이 아니라 현재 데이터셋의 6개 클래스 중 모델이 선택한 상대 점수입니다.
 
+## 사진 업로드 화면
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+브라우저가 열리면 JPG, PNG 또는 WebP 손톱 사진을 올려 분류 결과를 확인할 수 있습니다.
+
 평가는 accuracy뿐 아니라 `artifacts/metrics.json`의 클래스별 recall, F1, confusion matrix를 함께 봐야 합니다. 특히 흑색종(Acral Lentiginous Melanoma)은 놓치는 경우(false negative)가 중요합니다. 실제 배포 전에는 환자 단위 외부 테스트셋, 촬영 환경·피부색·연령대별 성능 검증, 전문의 검토가 필요합니다.

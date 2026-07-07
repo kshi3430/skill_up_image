@@ -16,8 +16,9 @@ def device_name():
     return "cpu"
 
 
-def make_model(classes):
-    model = models.efficientnet_b0(weights=models.EfficientNet_B0_Weights.DEFAULT)
+def make_model(classes, pretrained=True):
+    weights = models.EfficientNet_B0_Weights.DEFAULT if pretrained else None
+    model = models.efficientnet_b0(weights=weights)
     model.classifier[1] = nn.Linear(model.classifier[1].in_features, classes)
     return model
 
@@ -65,7 +66,7 @@ def main():
     counts = np.bincount(train_ds.targets, minlength=len(train_ds.classes))
     weights = torch.tensor(len(train_ds) / (len(counts) * counts), dtype=torch.float32, device=device)
     loss_fn = nn.CrossEntropyLoss(weight=weights, label_smoothing=.05)
-    model = make_model(len(train_ds.classes)).to(device)
+    model = make_model(len(train_ds.classes), pretrained=True).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
     best = -1.0
     for epoch in range(1, args.epochs + 1):
@@ -87,4 +88,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
