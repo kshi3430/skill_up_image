@@ -34,6 +34,6 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-브라우저가 열리면 JPG, PNG 또는 WebP 손톱 사진을 올려 분류 결과를 확인할 수 있습니다.
+브라우저가 열리면 JPG, PNG 또는 WebP 손톱 사진을 올리거나 기기의 카메라로 직접 촬영해 분류 결과를 확인할 수 있습니다. 배포 주소가 HTTPS여야 브라우저 카메라가 정상 작동하며, 최초 사용 시 카메라 권한을 허용해야 합니다.
 
 평가는 accuracy뿐 아니라 `artifacts/metrics.json`의 클래스별 recall, F1, confusion matrix를 함께 봐야 합니다. 특히 흑색종(Acral Lentiginous Melanoma)은 놓치는 경우(false negative)가 중요합니다. 실제 배포 전에는 환자 단위 외부 테스트셋, 촬영 환경·피부색·연령대별 성능 검증, 전문의 검토가 필요합니다.

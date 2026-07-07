@@ -44,11 +44,21 @@ if not MODEL_PATH.exists():
     st.error(f"학습 모델을 찾을 수 없습니다: {MODEL_PATH}")
     st.stop()
 
-uploaded = st.file_uploader(
-    "손톱 사진 선택",
-    type=["jpg", "jpeg", "png", "webp"],
-    accept_multiple_files=False,
+input_method = st.radio(
+    "사진 입력 방법",
+    ["사진 업로드", "카메라 촬영"],
+    horizontal=True,
 )
+
+if input_method == "사진 업로드":
+    uploaded = st.file_uploader(
+        "손톱 사진 선택",
+        type=["jpg", "jpeg", "png", "webp"],
+        accept_multiple_files=False,
+    )
+else:
+    st.info("한 손톱이 화면 중앙을 크게 채우도록 가까이에서 촬영하세요.")
+    uploaded = st.camera_input("손톱 사진 촬영")
 
 if uploaded is not None:
     try:
@@ -57,7 +67,8 @@ if uploaded is not None:
         st.error("이미지를 읽을 수 없습니다. 다른 사진을 선택해 주세요.")
         st.stop()
 
-    st.image(image, caption="업로드한 사진", use_container_width=True)
+    caption = "촬영한 사진" if input_method == "카메라 촬영" else "업로드한 사진"
+    st.image(image, caption=caption, use_container_width=True)
     model, classes, device = load_model()
     tensor = PREPROCESS(image).unsqueeze(0).to(device)
     with st.spinner("이미지를 분석하고 있습니다..."):
