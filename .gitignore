@@ -1,0 +1,7 @@
+/data/
+/data_clean/
+/artifacts/
+/.venv/
+*.zip
+__pycache__/
+*.pyc
